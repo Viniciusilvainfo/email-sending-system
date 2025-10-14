@@ -1,8 +1,8 @@
 import express from 'express';
-import axios from 'axios';
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import moment from 'moment';
 
 const app = express();
 const PORT = 3000;
@@ -16,8 +16,11 @@ app.set("view engine", "ejs");
 app.set("views", "./src/views");
 
 app.get('/', async (req, res) => {
+    const now = moment();
+
     const dados = {
-        "id" : 123
+        "id" : 123,
+        "data": now.format('MMMM Do YYYY, h:mm:ss a')
     };
 
     const token = jwt.sign(dados, secret, { expiresIn: '1h' });
